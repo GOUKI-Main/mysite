@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,6 +12,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+const notoSansJp = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  preload: false,
+  variable: "--font-noto-sans-jp",
+  display: "swap",
+  fallback: ["Hiragino Sans", "Hiragino Kaku Gothic ProN", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -23,11 +33,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJp.variable} antialiased grid grid-rows-[auto_1fr_auto] h-screen `}
       >
-        {children}
+        <Header />
+        <main className="z-0 row-start-1 -row-end-2 col-start-1 -col-end-1 overflow-y-auto no-scrollbar">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
