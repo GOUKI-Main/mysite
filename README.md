@@ -1,3 +1,5 @@
+#AIによって作成されたREADMEです。今後適切に編集予定です。
+
 # 個人サイト
 
 Next.js 15.5.4で構築されたポートフォリオサイトです。React 19、TypeScript、Tailwind CSS 4を使用し、Framer MotionとP5.jsによるインタラクティブなアニメーションを特徴としています。
