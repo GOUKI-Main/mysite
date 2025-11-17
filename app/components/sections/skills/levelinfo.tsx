@@ -74,7 +74,7 @@ export const Levelinfo = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, }}
         transition={{ duration: 0.5 }}
         className="space-y-2"
       >
@@ -86,7 +86,7 @@ export const Levelinfo = () => {
           <motion.span
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, }}
             transition={{
               duration: 0.3,
             }}

@@ -13,7 +13,7 @@ const SkillItem = ({ skill }: SkillItemProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, }}
       transition={{ duration: 0.5 }}
       className="space-y-2"
     >
@@ -33,7 +33,7 @@ const SkillItem = ({ skill }: SkillItemProps) => {
         <motion.span
           initial={{ opacity: 0, scale: 0.5 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, }}
           transition={{
             duration: 0.3,
           }}
@@ -49,7 +49,7 @@ const SkillItem = ({ skill }: SkillItemProps) => {
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${skill.level}%` }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, }}
           transition={{
             duration: 1.2,
             ease: [0.43, 0.13, 0.23, 0.96],
@@ -61,7 +61,7 @@ const SkillItem = ({ skill }: SkillItemProps) => {
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${skill.level}%` }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, }}
           transition={{
             duration: 1.2,
             ease: [0.43, 0.13, 0.23, 0.96],
