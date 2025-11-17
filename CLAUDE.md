@@ -46,10 +46,11 @@ npm run lint
 
 The application uses a grid-based layout defined in `app/layout.tsx`:
 
-- Header (row 1): Fixed navigation with emerald-950 background
-- Main content (row 2): Scrollable content area
-- Footer (row 3): Fixed footer with emerald-950 background
-- Minimum height: 100svh (small viewport height)
+- Grid template: `grid-rows-[auto_1fr_auto]` with overlapping rows
+- Header: Fixed at top with emerald-950 background
+- Main content: Scrollable with `overflow-y-auto no-scrollbar`, spans from row 1 to row -2
+- Footer: Fixed at bottom with emerald-950 background
+- Height: 100vh (full viewport height)
 
 ### Font Configuration
 
@@ -122,6 +123,7 @@ All fonts use CSS variables for flexible theming.
 
 **Configuration (`app/connfigs/`):**
 - `skillconfig.ts`: Skills data with name, level (0-100), and icon path for each skill grouped by category
+- `levelDescriptionConfig.ts`: Defines skill level descriptions and ranges (0: 学習予定, 1-10: 概念理解, 11-30: 基礎レベル, 31-60: 中級レベル, 61-80: 上級レベル, 81-99: 指導者レベル, 100: 神)
 
 ### Key Technologies
 
@@ -185,8 +187,9 @@ All fonts use CSS variables for flexible theming.
 - Strict mode enabled
 
 **Next.js Configuration:**
+- Output mode: `export` (static site generation)
 - Trailing slash enabled (`trailingSlash: true`)
-- Static export available via build command
+- Image optimization disabled (`images.unoptimized: true`) for static export compatibility
 
 ## Development Notes
 

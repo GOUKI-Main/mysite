@@ -42,18 +42,39 @@ export default function AvoidMouseText({
       }
     };
 
+    const handlePointerDown = (e: PointerEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setPointerPos({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+        setIsActive(true);
+      }
+    };
+
     const handlePointerLeave = () => {
+      setIsActive(false);
+    };
+
+    const handlePointerUp = () => {
       setIsActive(false);
     };
 
     const container = containerRef.current;
     if (container) {
       container.addEventListener("pointermove", handlePointerMove);
+      container.addEventListener("pointerdown", handlePointerDown);
       container.addEventListener("pointerleave", handlePointerLeave);
+      container.addEventListener("pointerup", handlePointerUp);
+      container.addEventListener("pointercancel", handlePointerUp);
 
       return () => {
         container.removeEventListener("pointermove", handlePointerMove);
+        container.removeEventListener("pointerdown", handlePointerDown);
         container.removeEventListener("pointerleave", handlePointerLeave);
+        container.removeEventListener("pointerup", handlePointerUp);
+        container.removeEventListener("pointercancel", handlePointerUp);
       };
     }
   }, []);

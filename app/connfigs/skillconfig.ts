@@ -20,7 +20,7 @@ export const skillsData: SkillsData = {
     {
       name: "C++",
       level: 31,
-      iconPath: "/C++ (CPlusPlus).svg",
+      iconPath: "/Cplus.svg",
     },
   ],
   "Frontend Framework": [
