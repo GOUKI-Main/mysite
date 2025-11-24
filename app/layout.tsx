@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
+import ScrollProgressBar from "./components/ui/scroll-progress-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,13 +36,18 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJp.variable} antialiased grid grid-rows-[auto_1fr_auto] h-dvh `}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJp.variable} antialiased min-h-dvh`}
       >
-        <Header />
-        <main className="row-start-1 -row-end-2 col-start-1 -col-end-1 overflow-y-auto no-scrollbar">
+        <ScrollProgressBar />
+        <header className="fixed top-0 left-0 right-0 md:text-3xl text-2xl font-sans font-extralight h-20 z-10 grid grid-cols-2 grid-rows-1 items-center bg-transparent">
+          <Header />
+        </header>
+        <main className="">
           {children}
         </main>
-        <Footer />
+        <footer className="bottom-0 right-0 left-0 z-20 fixed bg-black dark:bg-emerald-950">
+          <Footer />
+        </footer>
       </body>
     </html>
   );
