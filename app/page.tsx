@@ -7,6 +7,7 @@ export default function Home() {
     <>
       <HERO />
       <MySkills />
+      <div className='h-30'></div>
     </>
   )
 }

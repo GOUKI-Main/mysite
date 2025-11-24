@@ -153,7 +153,7 @@ export default function AvoidMouseText({
   return (
     <div
       ref={containerRef}
-      className={`flex flex-col justify-center overflow-hidden ${containerClassName}`}
+      className={`h-dvh flex flex-col justify-center overflow-hidden ${containerClassName}`}
     >
       {lines.map((lineChars, lineIndex) => {
         // 行ごとのfontSizeを決定
