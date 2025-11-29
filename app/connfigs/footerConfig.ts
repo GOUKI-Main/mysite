@@ -10,8 +10,8 @@ export const footerLogos: footerlogo[] = [
     },
     {
         name: "X",
-        light: "x.svg",
-        dark: "xW.svg",
+        light: "/x.svg",
+        dark: "/xW.svg",
         href: "https://x.com/GOUKI_Main",
         alt: "X",
     },
