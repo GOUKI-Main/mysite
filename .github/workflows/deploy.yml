@@ -84,7 +84,7 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*.html" "/*/index.html" "/*.json" "/*.txt"
+            --paths "/*"
 
       # デプロイ完了通知
       - name: Deployment completed
