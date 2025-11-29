@@ -25,7 +25,7 @@ const Footerlogo = (footerLogos:footerlogo) => {
                     ease: "easeOut",
                   },
                 }}
-                href="https://github.com/GOUKI-Main"
+                href={footerLogos.href} target="_blank" rel="noopener noreferrer"
               >
                 <Image
                   src={footerLogos.light}
