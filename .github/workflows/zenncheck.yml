@@ -7,7 +7,8 @@ on:
 
 # セキュリティ
 permissions:
-  contents: read # gh workflow runコマンドのため
+  contents: read # リポジトリ情報の読み取りのため
+  actions: write # gh workflow runコマンドで他のワークフローをトリガーするため
 
 jobs:
   check-zenn-updates:
