@@ -45,7 +45,7 @@ export default function RootLayout({
         <main className="">
           {children}
         </main>
-        <footer className="bottom-0 right-0 left-0 z-20 fixed bg-black dark:bg-emerald-950">
+        <footer className="bottom-0 right-0 left-0 z-20 fixed outline-2 outline-emerald-500 dark:outline-emerald-950 bg-white/50 dark:bg-emerald-950/50">
           <Footer />
         </footer>
       </body>

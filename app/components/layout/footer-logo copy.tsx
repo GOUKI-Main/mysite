@@ -1,5 +1,4 @@
 "use client";
-
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { footerlogo } from "@/app/types/footerTypes";
@@ -9,6 +8,8 @@ const Footerlogo = (footerLogos:footerlogo) => {
   return (
     //コンポーネント分割予定
     <>
+      <div className="flex justify-around items-center p-5">
+      </div>
       <motion.a
                 whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.8 }}

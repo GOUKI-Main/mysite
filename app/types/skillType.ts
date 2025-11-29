@@ -1,4 +1,12 @@
-import { SkillGroups } from "./skillGroups";
+
+export type SkillGroups =
+  | "Frontend Framework"
+  | "Programming Language"
+  | "Styling Framework"
+  | "Backend Framework"
+  | "Database"
+  | "Mobile"
+  | "Other";
 
 // 個別スキルの型（categoryは持たない）
 export interface Skill {
@@ -24,3 +32,10 @@ export interface skill {
   iconPath: string;
   category: SkillGroups;
 }
+
+  export type LevelDescription = {
+  minLevel: number;
+  maxLevel: number;
+  title: string;
+  description: string;
+};
