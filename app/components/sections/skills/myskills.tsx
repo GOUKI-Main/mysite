@@ -1,5 +1,5 @@
 import { skillsData } from "../../../connfigs/skillconfig";
-import { SkillGroups } from "../../../types/skillGroups";
+import { SkillGroups } from "../../../types/skillType";
 import { SkillCategory } from "./skill-category";
 import { Levelinfo } from "./levelinfo";
 

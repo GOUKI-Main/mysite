@@ -22,7 +22,7 @@ const ZennArticleCard = ({ article }: ZennArticleCardProps) => {
       rel="noopener noreferrer"
       className="group block h-full"
     >
-      <div className="h-full bg-emerald-950/30 border border-emerald-900 rounded-lg p-6 transition-all duration-300 hover:bg-emerald-950/50 hover:border-emerald-700/70 hover:shadow-lg hover:shadow-emerald-900/20 hover:-translate-y-1 flex flex-col">
+      <div className="h-full bg-emerald-300/20 dark:bg-emerald-950/30 border border-emerald-900 rounded-lg p-6 transition-all duration-300 hover:bg-emerald-950/50 hover:border-emerald-700/70 hover:shadow-lg hover:shadow-emerald-900/20 hover:-translate-y-1 flex flex-col">
         {/* Emoji */}
         <div className="text-5xl mb-4">{article.emoji}</div>
 

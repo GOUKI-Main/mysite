@@ -15,7 +15,7 @@ on:
 # セキュリティ: 最小権限の原則
 permissions:
   contents: read # リポジトリのコードを読み取るため
-  id-token: write # AWS OIDC認証のため
+  id-token: write # AWS OIDC認証のため(将来的な移行を考慮)
 
 jobs:
   build-and-deploy:
@@ -41,14 +41,12 @@ jobs:
       - name: Build Next.js application
         run: npm run build
 
-      # AWS認証情報の設定(OIDC方式)
-      # 【説明】GitHub ActionsのOIDCプロバイダーを使用してIAMロールを引き受けます
-      # 【説明】AWS_ROLE_ARNシークレットにIAMロールのARNを設定してください
-      # 【説明】例: arn:aws:iam::123456789012:role/GitHubActionsDeployRole
+      # AWS認証情報の設定
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       # S3にファイルをアップロード
@@ -56,30 +54,22 @@ jobs:
       # 【説明】--cache-control でブラウザキャッシュの設定をしています
       - name: Deploy to S3
         run: |
-          # Next.jsの_next/static/以下のファイルは長期キャッシュ(ハッシュ付きなので安全)
-          aws s3 sync out/_next/static/ s3://${{ secrets.AWS_S3_BUCKET }}/_next/static/ \
-            --delete \
-            --cache-control "public, max-age=31536000, immutable"
-
-          # その他の静的アセット(画像など)も長期キャッシュ
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
-            --exclude "_next/static/*" \
+            --exclude "_next/*" \
             --exclude "*.html" \
-            --exclude "*.json" \
-            --exclude "*.txt"
+            --exclude "*.json"
 
-          # HTMLとJSONファイルはキャッシュしない(常に最新を取得)
+          # HTMLとJSONファイルはキャッシュ時間を短くする
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }}/ \
             --cache-control "public, max-age=0, must-revalidate" \
             --exclude "*" \
             --include "*.html" \
-            --include "*.json" \
-            --include "*.txt"
+            --include "*.json"
 
-      # CloudFrontのキャッシュをクリア
-      # 【説明】HTMLとJSONのみ無効化し、静的アセットはCache-Controlで管理
+      # CloudFrontのキャッシュをクリア(CloudFrontを使用している場合)
+      # 【説明】CloudFrontを使っていない場合は、このステップを削除してください
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \

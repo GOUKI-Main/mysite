@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SkillGroups } from "../../../types/skillGroups";
+import { SkillGroups } from "../../../types/skillType";
 import { Skill } from "../../../types/skillType";
 import SkillItem from "./skill-item";
 

@@ -1,9 +1,4 @@
-export type LevelDescription = {
-  minLevel: number;
-  maxLevel: number;
-  title: string;
-  description: string;
-};
+import { LevelDescription } from "@/app/types/skillType";
 
 export const levelDescriptions: LevelDescription[] = [
   {

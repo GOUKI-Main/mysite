@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
 import ScrollProgressBar from "./components/ui/scroll-progress-bar";
+import ThemeProvider from "./theme/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,20 +35,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSansJp.variable} antialiased min-h-dvh`}
       >
-        <ScrollProgressBar />
-        <header className="fixed top-0 left-0 right-0 md:text-3xl text-2xl font-sans font-extralight h-20 z-10 grid grid-cols-2 grid-rows-1 items-center bg-transparent">
-          <Header />
-        </header>
-        <main className="">
-          {children}
-        </main>
-        <footer className="bottom-0 right-0 left-0 z-20 fixed bg-black dark:bg-emerald-950">
-          <Footer />
-        </footer>
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <ScrollProgressBar />
+          <header className="fixed top-0 left-0 right-0 md:text-3xl text-2xl font-sans font-extralight h-20 z-10 grid grid-cols-2 grid-rows-1 items-center bg-transparent">
+            <Header />
+          </header>
+          <main className="">
+            {children}
+          </main>
+          <footer className="bottom-0 right-0 left-0 z-20 fixed outline-2 outline-emerald-500 dark:outline-emerald-950 bg-white/50 dark:bg-emerald-950/50">
+            <Footer />
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );
