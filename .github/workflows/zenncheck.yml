@@ -2,13 +2,12 @@ name: Check Zenn API and Deploy
 
 on:
   schedule:
-    - cron: "0 */3 * * *" # 毎日0時、3時、6時...に実行
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 
-# セキュリティ
 permissions:
-  contents: read # リポジトリ情報の読み取りのため
-  actions: write # gh workflow runコマンドで他のワークフローをトリガーするため
+  contents: read
+  actions: write
 
 jobs:
   check-zenn-updates:
@@ -23,48 +22,53 @@ jobs:
         id: cache-zenn
         uses: actions/cache/restore@v4
         with:
-          path: zenn-previous-hash.txt
-          key: zenn-hash
+          path: zenn-hash.txt  # ← ファイル名を統一
+          key: zenn-hash-${{ github.run_id }}  # ← 一意なkeyにしない（常に同じkeyを使う）
+          restore-keys: |
+            zenn-hash-  # ← プレフィックスで最新のキャッシュを復元
 
       # Zenn APIから最新記事を取得してハッシュ化
       - name: Fetch and hash Zenn data
         run: |
           echo "📡 Zenn APIから最新記事を取得中..."
 
-          # APIレスポンスを取得してSHA256ハッシュ化
           if ! curl -sf --max-time 30 "https://zenn.dev/api/articles?username=gouki_main&order=latest&page=1" \
-               | sha256sum | cut -d' ' -f1 > zenn-current-hash.txt; then
+               | sha256sum | cut -d' ' -f1 > zenn-hash-new.txt; then
             echo "❌ Zenn APIへのリクエストが失敗しました"
             exit 1
           fi
 
-          echo "✅ ハッシュ値: $(cat zenn-current-hash.txt)"
+          echo "✅ ハッシュ値: $(cat zenn-hash-new.txt)"
 
       # 前回のハッシュ値と比較
       - name: Check for changes
         id: check-diff
         run: |
-          if [ ! -f zenn-previous-hash.txt ]; then
+          if [ ! -f zenn-hash.txt ]; then
             echo "⚠️ 前回のハッシュが見つかりません(初回実行またはキャッシュ期限切れ)"
             echo "has-changes=true" >> $GITHUB_OUTPUT
-          elif diff -q zenn-previous-hash.txt zenn-current-hash.txt > /dev/null; then
+          elif diff -q zenn-hash.txt zenn-hash-new.txt > /dev/null; then
             echo "✅ 変更なし: Zenn記事に更新はありません"
             echo "has-changes=false" >> $GITHUB_OUTPUT
           else
             echo "🔄 変更あり: Zenn記事が更新されました"
-            echo "前回: $(cat zenn-previous-hash.txt)"
-            echo "今回: $(cat zenn-current-hash.txt)"
+            echo "前回: $(cat zenn-hash.txt)"
+            echo "今回: $(cat zenn-hash-new.txt)"
             echo "has-changes=true" >> $GITHUB_OUTPUT
           fi
 
+      # 新しいハッシュ値を次回用のファイル名にコピー
+      - name: Prepare hash for caching
+        if: success()
+        run: cp zenn-hash-new.txt zenn-hash.txt
+
       # 現在のハッシュ値を次回用に保存
-      # NOTE: キャッシュは7日間アクセスがないと自動削除されます
       - name: Save current Zenn hash
         if: success()
         uses: actions/cache/save@v4
         with:
-          path: zenn-current-hash.txt
-          key: zenn-hash
+          path: zenn-hash.txt  # ← ファイル名を統一
+          key: zenn-hash-${{ github.run_id }}  # ← 実行ごとに一意なkeyにする
 
       # 差分がある場合はデプロイワークフローをトリガー
       - name: Trigger deployment workflow
